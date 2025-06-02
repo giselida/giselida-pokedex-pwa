@@ -1,0 +1,92 @@
+<div class="{{`modal ${pokemon?.types?.[0]}`}}">
+  <div class="row">
+    <p style="min-width: 60px">#{{pokemon.id}}</p>
+    <button (click)="pokemon.isShine = !pokemon.isShine" matButton>
+      <img src="shiny.svg" alt="image of pokemon shiny" />
+    </button>
+    <div class=""></div>
+  </div>
+  <pokemon-card
+    [nameIsVisible]="false"
+    [isShiny]="pokemon.isShine"
+    [pokemon]="pokemon"
+  />
+
+  <mat-tab-group>
+    <mat-tab label="Sobre">
+      <div class="about">
+        <div class="content">
+          <span class="title">Nome:</span>
+          <span>{{pokemon.name | titlecase}}</span>
+        </div>
+        <div class="content">
+          <span class="title">Altura:</span>
+          <span>{{pokemon.height | height }}</span>
+        </div>
+        <div class="content">
+          <span class="title">Peso:</span>
+          <span>{{pokemon.weight | weight }}</span>
+        </div>
+        <div class="content">
+          <span class="title">Tipos:</span>
+          <div class="content-types">
+            @for (type of pokemon.types; track type) { @if (type) {
+            <span class="{{`label-type ${type}`}}">{{type | titlecase}}</span>
+            } }
+          </div>
+        </div>
+        <div class="content">
+          <span class="title">Habilidades:</span>
+
+          <span class="abilities">
+            @for (ability of pokemon.abilities; let i = $index; let last =
+            $last; track ability) { {{ ability | titlecase }} @if (!last) { | }
+            }
+          </span>
+        </div>
+        <div class="content">
+          <span class="title">Experiencia Base:</span>
+          <span class="abilities"> {{pokemon.baseExperience}} </span>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Status">
+      @for (status of pokemon.stats; track status.name) { @let statusColor =
+      percentageToHexColor(status.value);
+      <span class="content-stats">
+        <div class="title">{{status.name | titlecase }}:</div>
+        <mat-progress-bar
+          mode="determinate"
+          style="{{
+        `   --mat-progress-bar-track-height: 10px;
+            --mat-progress-bar-active-indicator-height: 10px;
+            --mat-progress-bar-active-indicator-color: ${statusColor}`
+        }}"
+          [value]="(status.value / 255) * 100"
+        >
+          ></mat-progress-bar
+        >
+      </span>
+      <br />
+      }
+    </mat-tab>
+    <mat-tab label="Movimentos">
+      <div class="table-wrapper">
+        <table mat-table [dataSource]="dataSource()" class="mat-elevation-z8">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nome</th>
+            <td mat-cell *matCellDef="let element">{{element | titlecase}}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="['name'];sticky:true"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['name'];"></tr>
+        </table>
+      </div>
+      <mat-paginator
+        [pageSize]="10"
+        [pageSizeOptions]="[ 10, 25, 100]"
+        aria-label="Selecione uma pagina"
+      >
+      </mat-paginator>
+    </mat-tab>
+  </mat-tab-group>
+</div>

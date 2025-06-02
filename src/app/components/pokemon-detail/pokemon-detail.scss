@@ -1,0 +1,101 @@
+@use "mixins" as *;
+.modal {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 10px;
+  .title {
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 5px;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    p {
+      font-weight: bold;
+    }
+  }
+  button {
+    margin-right: 60px;
+    @include circle(
+      50px,
+      #ffc107,
+      1px solid rgba(255, 255, 255, 0.616),
+      0 0 5px #d8c974da
+    );
+    transform: scale(0.6);
+    cursor: pointer;
+    img {
+      width: 30px;
+      height: 30px;
+      margin-top: 10px;
+    }
+  }
+  ::ng-deep {
+    .mdc-linear-progress {
+      border-radius: 8px;
+    }
+    .mat-mdc-tab-body {
+      overflow-y: hidden;
+    }
+    .mat-mdc-tab-body-content {
+      padding: 15px;
+    }
+    tr {
+      height: 24px;
+    }
+    table,
+    td,
+    tr {
+      background-color: transparent !important;
+    }
+    th,
+    mat-paginator {
+      background-color: rgb(255 255 255);
+    }
+    .table-wrapper {
+      max-height: 500px;
+      overflow-y: scroll;
+      height: 255px;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+    .pokemon-card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.288) !important;
+      filter: unset;
+      &:hover {
+        border-color: transparent;
+        box-shadow: unset;
+      }
+    }
+  }
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+  }
+  .content {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+  }
+  .content-stats {
+    display: flex;
+    align-items: center;
+    .title {
+      width: 100px;
+    }
+  }
+
+  .content-types {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    .label-type {
+      border: 1px solid #000;
+      padding: 4px;
+      border-radius: 5px;
+    }
+  }
+}
