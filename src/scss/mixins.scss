@@ -1,0 +1,41 @@
+@mixin circle($size, $color, $border: 0, $shadow: none) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background-color: $color;
+  border: $border;
+  box-shadow: $shadow;
+}
+
+@mixin glow-light($color, $border-color: black) {
+  @include circle(15px, $color, 1px solid $border-color, 0 0 5px #000);
+}
+
+@mixin scan-dot($size, $color, $z, $x: -50%, $y: -50%) {
+  @include circle($size, $color);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate($x, $y);
+  z-index: $z;
+}
+@mixin center-flex($direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin inset-button-shadow {
+  box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.5),
+    inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+@mixin pokedex-screen {
+  background-color: #9ecbff;
+  border: 16px solid #e3e3e3;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: inset 0px 0px 5px 1px black;
+}
