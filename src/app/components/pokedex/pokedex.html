@@ -1,0 +1,135 @@
+<div class="pokedex">
+  <div class="line">
+    <div class="pokedex-header">
+      <div class="scan-light">
+        <div class="dot-light"></div>
+        <div class="dot-shadow"></div>
+      </div>
+      <div class="light red">
+        <div class="ball"></div>
+      </div>
+      <div class="light yellow">
+        <div class="ball"></div>
+      </div>
+      <div class="light green">
+        <div class="ball"></div>
+      </div>
+    </div>
+    <img src="title.png" class="title" alt="Pokédex" />
+    <br />
+  </div>
+
+  <div class="screen-outline">
+    <div class="screen" #screenRef>
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="page-actions">
+      <div class="buttons">
+        <div class="buttons">
+          <button
+            class="button blue"
+            [class.active]="currentPageSize() == 10"
+            (click)="pageSize.emit(10)"
+          >
+            <span>10</span>
+          </button>
+          <button
+            class="button green"
+            [class.active]="currentPageSize() == 20"
+            (click)="pageSize.emit(20)"
+          >
+            <span>20</span>
+          </button>
+          <button
+            class="button orange"
+            [class.active]="currentPageSize() == 50"
+            (click)="pageSize.emit(50)"
+          >
+            <span>50</span>
+          </button>
+          <button
+            class="button black"
+            [class.active]="currentPageSize() == 10000"
+            (click)="pageSize.emit(10000)"
+          >
+            <span>ALL</span>
+          </button>
+          <button
+            class="button yellow"
+            [class.active]="currentFavoriteFilterValue()"
+            (click)="favoriteFilterEvent()"
+          >
+            <span>⭐</span>
+          </button>
+        </div>
+      </div>
+      <div class="pokedex-input-panel">
+        <div class="row">
+          <label for="search" class="label">Buscar Pokémon</label>
+          <p class="page-index">Página Atual: {{ currentPageIndex() + 1 }}</p>
+        </div>
+        <div class="panel-operations">
+          <button
+            [disabled]="totalPages() <= 1"
+            class="jump"
+            (click)="goToFirstPage()"
+            title="Ir para a primeira página"
+          >
+            &laquo;
+          </button>
+          <div class="input-navigation">
+            <input id="search" type="text" [formControl]="name" class="input" />
+          </div>
+          <button
+            [disabled]="totalPages() <= 1"
+            class="jump"
+            (click)="goToLastPage()"
+            title="Ir para a última página"
+          >
+            &raquo;
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-pad">
+      <div
+        class="up"
+        (mousedown)="startScroll('up')"
+        (mouseup)="stopScroll()"
+        (mouseleave)="stopScroll()"
+        (touchstart)="startScroll('up')"
+        (touchend)="stopScroll()"
+        title="Scrollar para cima"
+      ></div>
+      <div
+        class="right"
+        [class.disabled]="isLastPage()"
+        (click)="!isLastPage() && nextPage()"
+        title="Próxima página"
+      ></div>
+      <div
+        class="down"
+        (mousedown)="startScroll('down')"
+        (mouseup)="stopScroll()"
+        (mouseleave)="stopScroll()"
+        (touchstart)="startScroll('down')"
+        (touchend)="stopScroll()"
+        title="Scrollar para baixo"
+      ></div>
+      <div
+        class="left"
+        title="Página anterior"
+        [class.disabled]="isFirstPage()"
+        (click)="!isFirstPage() && previewPage()"
+      ></div>
+      <div
+        class="center"
+        title="Ir para a primeira página"
+        (click)="resetPage()"
+      ></div>
+    </div>
+  </div>
+</div>

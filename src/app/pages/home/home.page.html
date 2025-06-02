@@ -1,0 +1,30 @@
+<app-pokedex
+  (pageSize)="onPageChange($event)"
+  (pageIndex)="onPageIndexChange($event)"
+  (favoriteFilter)="onFavoriteFilterChange($event)"
+  (searchType)="onFilterPage($event)"
+  [count]="pokeService.count"
+  [currentPageSize]="pageSize()"
+>
+  <div class="pokemons-cards">
+    @for (pokemon of pokemons(); track pokemon.name) {
+    <div class="container">
+      @let isFavorite = favoriteIds().includes(pokemon.id); @let imgPath =
+      isFavorite ? "star-filled.png" : "star.png"; @let imgAlt = isFavorite ?
+      "Pokemon favoritado" : "Pokemon não favoritado";
+      <img
+        (click)="onFavoritePokemon(pokemon.id)"
+        class="star"
+        [src]="imgPath"
+        [alt]="imgAlt"
+      />
+      <pokemon-card
+        (click)="onOpenDialog(pokemon)"
+        [pokemon]="pokemon"
+        [class.favorite-pokemon]="isFavorite"
+      />
+    </div>
+    } @empty { <img src="404.png" class="error" alt="Não há dados" /> Não há
+    dados }
+  </div>
+</app-pokedex>

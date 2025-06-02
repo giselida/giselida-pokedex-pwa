@@ -1,0 +1,16 @@
+@let pokemon = pokemonInput(); @if (pokemon) { @let name =
+(pokemon.name|titlecase);
+<div class="pokemon-card">
+  @let imageUrl = isShiny() ?
+  pokemon.spriteUrl.replace(pokemon.id.toString(),'shiny/' + pokemon.id) :
+  pokemon.spriteUrl;
+  <img
+    [src]="imageUrl"
+    alt="{{`Sprite do Pokemon ${name}`}} "
+    (error)="pokemon.spriteUrl = 'no-pokemon.png'"
+  />
+</div>
+@if (nameIsVisible()) {
+<p>#{{pokemon.id}}</p>
+<p style="top: -30px">{{name}}</p>
+} }

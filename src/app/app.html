@@ -1,1 +1,6 @@
-<router-outlet></router-outlet>
+@if (loading()) {
+<div class="backdrop">
+  <mat-spinner mode="indeterminate"></mat-spinner>
+</div>
+}
+<router-outlet />

@@ -1,1 +1,86 @@
-/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
+
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+$type-colors: (
+  "fire": #f08030,
+  "grass": #78c850,
+  "electric": #f8d030,
+  "water": #5bc7e5,
+  "ground": #e0c068,
+  "rock": #b8a038,
+  "fairy": #e03a83,
+  "poison": #a040a0,
+  "bug": #a8b820,
+  "dragon": #7038f8,
+  "psychic": #f85888,
+  "flying": #a890f0,
+  "fighting": #c03028,
+  "normal": #999940,
+  "ice": #9db7f5,
+  "ghost": #705898,
+  "dark": #705848,
+  "steel": #b8b8d0,
+);
+
+$type-colors-dark: (
+  "fire": #d45a03,
+  "grass": #309000,
+  "electric": #d8ad00,
+  "water": #008db4,
+  "ground": #c08d00,
+  "rock": #aa8b00,
+  "fairy": #ac004d,
+  "poison": #8d008d,
+  "bug": #8fa100,
+  "dragon": #1a0252ad,
+  "psychic": #800d2f,
+  "flying": #371895,
+  "fighting": #f335008c,
+  "normal": #979702,
+  "ice": #016b6b,
+  "ghost": #463364,
+  "dark": #49392f,
+  "steel": #787887,
+);
+
+@each $type, $color in $type-colors-dark {
+  .modal.#{$type} {
+    background-color: $color;
+  }
+}
+@each $type, $color in $type-colors {
+  .label-type.#{$type} {
+    background-color: $color;
+  }
+}
+
+html {
+  height: 100%;
+}
+.backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0 0 0 /0.3);
+  z-index: 1000;
+}

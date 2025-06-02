@@ -1,0 +1,308 @@
+@use "mixins" as *;
+
+:host {
+  width: 100%;
+  padding-top: 4px;
+  .title {
+    width: 215px;
+    height: 85px;
+    object-fit: cover;
+    position: relative;
+    top: -10px;
+    left: -80px;
+  }
+
+  .line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .pokedex {
+    background: linear-gradient(to bottom, #d41246, #a10e34);
+    border-radius: 20px;
+    border: 3px solid #000;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+    margin: auto;
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 70px);
+    padding: 20px;
+    max-width: 750px;
+
+    .pokedex-header {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      margin-bottom: 20px;
+      .scan-light {
+        @include circle(45px, #0cbed2, 4px solid white, 0 0 5px #000);
+        position: relative;
+
+        .dot-light {
+          @include scan-dot(10px, #a5f3f9, 3, -100%, -100%);
+        }
+
+        .dot-shadow {
+          @include scan-dot(35px, #0aeff8, 2, -55%, -55%);
+        }
+      }
+
+      .light {
+        position: relative;
+
+        &.red {
+          @include circle(16px, #a6040e, 1px solid rgba(0, 0, 0, 0.2), unseat);
+          .ball {
+            @include scan-dot(8px, #df041a, 2, -70%, -60%);
+          }
+        }
+        &.yellow {
+          @include circle(16px, #e0d315, 1px solid rgba(0, 0, 0, 0.2), unseat);
+          .ball {
+            @include scan-dot(8px, #d5fa03, 2, -70%, -60%);
+          }
+        }
+        &.green {
+          @include circle(16px, #6df01c, 1px solid rgba(0, 0, 0, 0.2), unseat);
+          .ball {
+            @include scan-dot(8px, #97ff52, 2, -70%, -60%);
+          }
+        }
+      }
+    }
+
+    .screen-outline {
+      border-radius: 24px;
+      margin-bottom: 20px;
+      border: 16px solid #e3e3e3;
+      overflow: hidden;
+      .screen {
+        width: 100%;
+        background-color: #9ecbff;
+        padding: 10px;
+        border-radius: 8px;
+        max-height: 56dvh;
+        text-align: center;
+        box-shadow: inset 0px 0px 5px 1px black;
+        overflow-y: scroll;
+      }
+    }
+    @media screen and (min-width: 900px) {
+      .screen {
+        min-height: 56dvh;
+        max-height: 56dvh;
+      }
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin-bottom: 20px;
+      width: 90%;
+      .buttons {
+        display: flex;
+        min-width: 80px;
+        max-width: 250px;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .button {
+        @include circle(30px, transparent);
+        @include inset-button-shadow;
+        cursor: pointer;
+        transition: background-color 0.5s ease-in-out box-shadow 0.5s
+          ease-in-out color 0.5s ease-in-out;
+        &.blue {
+          background-color: #3d7dca;
+          &.active {
+            background-color: #0877ff;
+            box-shadow: 0 0 12px #3d7dca;
+            color: white;
+          }
+        }
+        &.green {
+          background-color: #3dcaa0;
+          &.active {
+            background-color: #02ffb3;
+            box-shadow: 0 0 12px #3dcaa0;
+            color: white;
+          }
+        }
+        &.orange {
+          background-color: #ca7d3d;
+          &.active {
+            background-color: #ff7300;
+            box-shadow: 0 0 12px #ca7d3d;
+            color: white;
+          }
+        }
+        &.black {
+          background-color: #000000;
+          color: rgb(136, 136, 136);
+          span {
+            font-size: 8px;
+            position: relative;
+            top: -2px;
+          }
+          &.active {
+            background-color: #141414;
+            color: white;
+            font-weight: bold;
+          }
+        }
+        &.yellow {
+          background-color: #ffc107;
+
+          &.active {
+            background-color: #f0c724;
+            box-shadow: 0 0 12px #ffc107;
+          }
+        }
+      }
+
+      .d-pad {
+        position: relative;
+        width: 60px;
+        height: 60px;
+
+        div {
+          position: absolute;
+          background-color: #333;
+          width: 20px;
+          height: 20px;
+        }
+
+        .up {
+          top: 0;
+          left: 20px;
+        }
+        .down {
+          bottom: 0;
+          left: 20px;
+        }
+        .left {
+          cursor: pointer;
+          left: 0;
+          top: 20px;
+        }
+        .right {
+          cursor: pointer;
+          right: 0;
+          top: 20px;
+        }
+        .center {
+          cursor: pointer;
+          left: 20px;
+          top: 20px;
+          background-color: #555;
+        }
+      }
+    }
+    .d-pad div {
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .d-pad .disabled {
+      pointer-events: none;
+      background-color: #1d1d1d !important;
+      opacity: 0.5;
+    }
+    .diagonal-up-left,
+    .diagonal-down-right {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background-color: #444;
+      cursor: pointer;
+      transform: rotate(45deg);
+    }
+
+    .input-navigation {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 50%;
+    }
+    .jump {
+      background-color: #444;
+      border: 1px solid #444;
+      color: #fff;
+      font-family: "Press Start 2P", monospace;
+      font-size: 10px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      height: 45px;
+      align-self: center;
+      position: relative;
+
+      &:disabled {
+        pointer-events: none;
+        background-color: #414141b9;
+      }
+
+      &:first-child {
+        right: -2px;
+      }
+
+      &:last-child {
+        left: -2px;
+      }
+    }
+    .panel-operations {
+      display: flex;
+      width: 100%;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 10px;
+    }
+    .page-actions {
+      width: 80%;
+    }
+    .pokedex-input-panel {
+      padding-top: 20px;
+      border-radius: 12px;
+      width: 100%;
+      color: #fff;
+      font-family: "Press Start 2P", monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 15px;
+      label {
+        font-size: 10px;
+        height: 10px;
+      }
+      .input {
+        padding: 0 10px;
+        background-color: #9ecbff;
+        color: black;
+        font-size: 14px;
+        height: 40px;
+        outline: none;
+        box-shadow: inset 0 0 5px #9ecbff;
+        transition: all 0.2s ease;
+
+        &:focus {
+          border-color: #0ff;
+          box-shadow: 0 0 8px #0ff;
+        }
+      }
+
+      .page-index {
+        font-size: 10px;
+        color: #0f0;
+        margin-top: 10px;
+        text-shadow: 0 0 2px #000;
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+@use "mixins" as *;
+:host {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  pokemon-card {
+    cursor: pointer;
+  }
+  .pokemons-cards:has(.error) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Press Start 2P", monospace;
+    margin-top: 10%;
+  }
+  .pokemons-cards:not(:has(.error)) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 155px));
+    justify-content: space-around;
+    gap: 8px 4px;
+  }
+  .star {
+    position: relative;
+    top: 40px;
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+}

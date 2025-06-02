@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterOutlet } from '@angular/router';
+import { LoadingService } from './services/loading/loading';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MatProgressSpinnerModule],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
 })
 export class App {
-  protected title = 'giselida-pokedex-pwa';
+  loading = inject(LoadingService).loading;
 }
