@@ -89,6 +89,9 @@
           </button>
           <div class="input-navigation">
             <input id="search" type="text" [formControl]="name" class="input" />
+            <button (click)="cleanSearch()">
+              <img src="close.png" alt="image of icon close" />
+            </button>
           </div>
           <button
             [disabled]="totalPages() <= 1"

@@ -62,7 +62,11 @@ export class PokedexComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
+  cleanSearch() {
+    this.name.setValue('');
+    this.resetPage();
+    this.searchType.emit('');
+  }
   emitPage(page: number) {
     this.pageSize.emit(page);
     this.resetPage();

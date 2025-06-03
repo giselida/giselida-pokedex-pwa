@@ -251,6 +251,19 @@
       flex-direction: column;
       gap: 8px;
       width: 50%;
+      position: relative;
+      button {
+        top: 9px;
+        position: absolute;
+        right: 0;
+        background-color: unset;
+        border: none;
+        cursor: pointer;
+        img {
+          width: 25px;
+          height: 25px;
+        }
+      }
     }
     .jump {
       background-color: $gray-light;

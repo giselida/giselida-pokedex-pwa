@@ -1,7 +1,7 @@
 <div class="{{`modal ${pokemon?.types?.[0]}`}}">
   <div class="row">
     <p style="min-width: 50px; padding-left: 10px">#{{pokemon.id}}</p>
-    <button (click)="pokemon.isShine = !pokemon.isShine" matButton>
+    <button (click)="pokemon.isShine = !pokemon.isShine">
       <img src="shiny.svg" alt="Icon of pokemon shiny" />
     </button>
     <div class="background-star">
