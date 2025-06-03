@@ -139,15 +139,15 @@ export class PokeService {
       name: pokemon.name,
       spriteUrl: pokemon.sprites.front_default,
       types: pokemon.types?.map((t) => t.type.name) ?? [],
-      abilities: pokemon.abilities?.map((a) => a.ability.name) ?? [],
+      abilities: pokemon.abilities?.map((a) => a.ability?.name) ?? [],
       height: pokemon.height,
       weight: pokemon.weight,
       baseExperience: pokemon.base_experience,
-      moves: pokemon.moves?.map((m) => m.move.name) ?? [],
+      moves: pokemon.moves?.map((m) => m.move?.name) ?? [],
       stats:
         pokemon.stats?.map((s) => ({
-          name: s.stat.name,
-          value: s.base_stat,
+          name: s?.stat?.name,
+          value: s?.base_stat,
         })) ?? [],
     }));
 

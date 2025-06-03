@@ -20,4 +20,8 @@ export class StorageService {
     }
     return value;
   }
+
+  removeItem(key: string) {
+    this.storage.removeItem(key);
+  }
 }
