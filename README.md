@@ -16,8 +16,7 @@
 
 <p align="center"> 
   <img alt="Top Language" src="https://img.shields.io/github/languages/top/giselida/giselida-pokedex-pwa?color=3498db&style=for-the-badge">
-  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/giselida/giselida-pokedex-pwa?color=3498db&style=for-the-badge&label=%C3%9Altimo%20Commit
-  ">   
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/giselida/giselida-pokedex-pwa?color=3498db&style=for-the-badge&label=%C3%9Altimo%20Commit">   
   <a href="https://github.com/giselida">
     <img alt="Developer Gisélida Cristine" src="https://img.shields.io/badge/Developer-Gisélida_Cristine-3498db?style=for-the-badge&label=Desenvolvedor">
   </a>  
