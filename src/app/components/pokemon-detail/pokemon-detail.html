@@ -1,10 +1,12 @@
 <div class="{{`modal ${pokemon?.types?.[0]}`}}">
   <div class="row">
-    <p style="min-width: 60px">#{{pokemon.id}}</p>
+    <p style="min-width: 50px; padding-left: 10px">#{{pokemon.id}}</p>
     <button (click)="pokemon.isShine = !pokemon.isShine" matButton>
-      <img src="shiny.svg" alt="image of pokemon shiny" />
+      <img src="shiny.svg" alt="Icon of pokemon shiny" />
     </button>
-    <div class=""></div>
+    <div class="background-star">
+      <star #star [id]="pokemon.id"></star>
+    </div>
   </div>
   <pokemon-card
     [nameIsVisible]="false"

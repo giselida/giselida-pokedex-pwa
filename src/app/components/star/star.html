@@ -1,0 +1,9 @@
+@let isFavorite = pokeService.favoriteIds().includes(id()!); @let imgPath =
+isFavorite ? "star-filled.png" : "star.png"; @let imgAlt = isFavorite ? "Pokemon
+favoritado" : "Pokemon não favoritado";
+<img
+  (click)="onFavoritePokemon(id()!)"
+  class="star"
+  [src]="imgPath"
+  [alt]="imgAlt"
+/>

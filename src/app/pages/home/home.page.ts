@@ -11,13 +11,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { PokedexComponent } from '../../components/pokedex/pokedex';
 import { PokemonCardComponent } from '../../components/pokemon-card/pokemon-card';
 import { PokemonDetailComponent } from '../../components/pokemon-detail/pokemon-detail';
+import { StarComponent } from '../../components/star/star';
 import { PokemonCard } from '../../interfaces/pokemon-card';
 import { PokeService } from '../../services/poke/poke';
 
 @Component({
+  standalone: true,
   imports: [
     PokemonCardComponent,
     PokedexComponent,
+    StarComponent,
     DialogModule,
     MatButtonModule,
   ],
@@ -25,17 +28,18 @@ import { PokeService } from '../../services/poke/poke';
   styleUrl: './home.page.scss',
 })
 export class HomePage implements OnInit {
-  pokeService = inject(PokeService);
+  readonly pokeService = inject(PokeService);
+  readonly dialogService = inject(MatDialog);
+
   pokemons: WritableSignal<PokemonCard[]> = signal([]);
   filter: WritableSignal<string> = signal('');
-  favoriteIds = signal<number[]>([]);
+
   favoriteFilter = signal<boolean>(false);
   pageIndex = signal<number>(0);
   pageSize = signal<number>(10000);
-  dialogService = inject(MatDialog);
 
   ngOnInit(): void {
-    this.favoriteIds.set(this.pokeService.getFavorites());
+    this.pokeService.favoriteIds.set(this.pokeService.getFavorites());
     this.getPokemons();
   }
 
@@ -64,24 +68,22 @@ export class HomePage implements OnInit {
   }
 
   onFavoritePokemon(id: number) {
-    let favoriteIds = this.favoriteIds();
+    let favoriteIds = this.pokeService.favoriteIds();
     if (!favoriteIds.includes(id)) {
       favoriteIds.push(id);
     } else {
       favoriteIds = favoriteIds.filter((item) => item != id);
     }
-    this.favoriteIds.set(favoriteIds);
-    this.pokeService.setFavorites(this.favoriteIds());
+    this.pokeService.favoriteIds.set(favoriteIds);
+    this.pokeService.setFavorites(this.pokeService.favoriteIds());
   }
   private getPokemons() {
-    const method = this.favoriteFilter()
-      ? 'getFavoritePokemons'
-      : 'getPokemons';
-
-    this.pokeService[method](
-      this.pageSize(),
-      this.pageIndex(),
-      this.filter()
-    ).subscribe(this.pokemons.set);
+    const payload = {
+      pageSize: this.pageSize(),
+      pageIndex: this.pageIndex(),
+      filter: this.filter(),
+      favoriteFilter: this.favoriteFilter(),
+    };
+    this.pokeService.getPokemons(payload).subscribe(this.pokemons.set);
   }
 }

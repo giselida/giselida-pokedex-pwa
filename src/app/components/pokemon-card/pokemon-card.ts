@@ -3,6 +3,7 @@ import { Component, input } from '@angular/core';
 import { PokemonCard } from '../../interfaces/pokemon-card';
 
 @Component({
+  standalone: true,
   imports: [TitleCasePipe],
   selector: 'pokemon-card',
   templateUrl: './pokemon-card.html',

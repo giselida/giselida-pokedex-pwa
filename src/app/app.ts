@@ -4,10 +4,11 @@ import { RouterOutlet } from '@angular/router';
 import { LoadingService } from './services/loading/loading';
 
 @Component({
-  selector: 'app-root',
+  standalone: true,
+  selector: 'root',
   imports: [RouterOutlet, MatProgressSpinnerModule],
   templateUrl: './app.html',
 })
-export class App {
+export class AppComponent {
   loading = inject(LoadingService).loading;
 }

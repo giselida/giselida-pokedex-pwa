@@ -1,0 +1,11 @@
+:host {
+  cursor: pointer;
+  .star {
+    position: relative;
+    top: 10px;
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+    transform: scale(1.5);
+  }
+}

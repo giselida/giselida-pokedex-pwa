@@ -1,4 +1,5 @@
 @use "mixins" as *;
+@use "variables" as *;
 .modal {
   display: flex;
   flex-direction: column;
@@ -17,12 +18,12 @@
     }
   }
   button {
-    margin-right: 60px;
+    margin-right: 30px;
     @include circle(
       50px,
-      #ffc107,
-      1px solid rgba(255, 255, 255, 0.616),
-      0 0 5px #d8c974da
+      $yellow-light,
+      1px solid $opacity,
+      0 0 5px $yellow-light-opacity
     );
     transform: scale(0.6);
     cursor: pointer;
@@ -33,6 +34,20 @@
     }
   }
   ::ng-deep {
+    .background-star {
+      background-color: $opacity;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      clip-path: content-box;
+      .star {
+        top: 4px;
+        left: 5px;
+      }
+    }
+    .star {
+      transform: scale(1);
+    }
     .mdc-linear-progress {
       border-radius: 8px;
     }
@@ -52,17 +67,17 @@
     }
     th,
     mat-paginator {
-      background-color: rgb(255 255 255);
+      background-color: $white;
     }
     .table-wrapper {
       max-height: 500px;
       overflow-y: scroll;
       height: 255px;
-      background-color: rgba(255, 255, 255, 0.7);
+      background-color: $opacity;
     }
     .pokemon-card {
       position: relative;
-      background: rgba(255, 255, 255, 0.288) !important;
+      background: $white-opacity !important;
       filter: unset;
       &:hover {
         border-color: transparent;
@@ -93,7 +108,7 @@
     gap: 10px;
     margin-bottom: 10px;
     .label-type {
-      border: 1px solid #000;
+      border: 1px solid $black;
       padding: 4px;
       border-radius: 5px;
     }

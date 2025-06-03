@@ -21,7 +21,15 @@
 
   <div class="screen-outline">
     <div class="screen" #screenRef>
-      <ng-content></ng-content>
+      @if (loading()) {
+      <div class="loading">
+        <div class="pokeball"></div>
+        Carregando Pokemons
+      </div>
+      }
+      <div class="body" [class.hidden]="loading()">
+        <ng-content></ng-content>
+      </div>
     </div>
   </div>
   <div class="controls">
@@ -31,28 +39,28 @@
           <button
             class="button blue"
             [class.active]="currentPageSize() == 10"
-            (click)="pageSize.emit(10)"
+            (click)="emitPage(10)"
           >
             <span>10</span>
           </button>
           <button
             class="button green"
             [class.active]="currentPageSize() == 20"
-            (click)="pageSize.emit(20)"
+            (click)="emitPage(20)"
           >
             <span>20</span>
           </button>
           <button
             class="button orange"
             [class.active]="currentPageSize() == 50"
-            (click)="pageSize.emit(50)"
+            (click)="emitPage(50)"
           >
             <span>50</span>
           </button>
           <button
             class="button black"
             [class.active]="currentPageSize() == 10000"
-            (click)="pageSize.emit(10000)"
+            (click)="emitPage(10000)"
           >
             <span>ALL</span>
           </button>
@@ -97,11 +105,9 @@
     <div class="d-pad">
       <div
         class="up"
-        (mousedown)="startScroll('up')"
-        (mouseup)="stopScroll()"
-        (mouseleave)="stopScroll()"
-        (touchstart)="startScroll('up')"
-        (touchend)="stopScroll()"
+        [holdScroll]="screenRef"
+        [direction]="'up'"
+        [scrollAmount]="scrollAmount"
         title="Scrollar para cima"
       ></div>
       <div
@@ -112,11 +118,9 @@
       ></div>
       <div
         class="down"
-        (mousedown)="startScroll('down')"
-        (mouseup)="stopScroll()"
-        (mouseleave)="stopScroll()"
-        (touchstart)="startScroll('down')"
-        (touchend)="stopScroll()"
+        [holdScroll]="screenRef"
+        [direction]="'down'"
+        [scrollAmount]="scrollAmount"
         title="Scrollar para baixo"
       ></div>
       <div

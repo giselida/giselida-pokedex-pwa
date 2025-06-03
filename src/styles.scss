@@ -1,11 +1,13 @@
 @use "@angular/material" as mat;
+@use "variables" as *;
 
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   margin: 0;
   padding: 0;
   height: 100%;
-  background: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
+  background: linear-gradient(-225deg, $blue-opacity 0%, $pink 100%);
+  user-select: none;
 
   @include mat.theme(
     (
@@ -83,4 +85,5 @@ html {
   justify-content: center;
   background: rgba(0 0 0 /0.3);
   z-index: 1000;
+  height: 100dvh;
 }

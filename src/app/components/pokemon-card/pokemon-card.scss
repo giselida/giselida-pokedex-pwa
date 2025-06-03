@@ -1,4 +1,5 @@
 @use "mixins" as *;
+@use "variables" as *;
 
 :host {
   @include center-flex(column);
@@ -11,19 +12,19 @@
   }
   &.favorite-pokemon {
     .pokemon-card {
-      background-color: #ffe066;
-      box-shadow: 0 0 12px #ffc107;
+      background-color: $yellow-light;
+      box-shadow: 0 0 12px $yellow;
 
       &:hover {
-        background-color: #f0c724;
-        box-shadow: 0 0 12px #d19e04;
+        background-color: $yellow-medium;
+        box-shadow: 0 0 12px;
       }
     }
   }
   .pokemon-card {
     width: 130px;
     height: 130px;
-    background-color: whitesmoke;
+    background-color: $white-smoke;
     filter: opacity(0.8);
     border-radius: 50%;
     @include center-flex(column);
@@ -45,9 +46,9 @@
     }
 
     &:hover {
-      background-color: #f5f5f5;
-      box-shadow: 0 0 12px #fafafa;
-      border: 1px solid rgba(0, 0, 0, 0.4);
+      background-color: $white-smoke;
+      box-shadow: 0 0 12px $white-light;
+      border: 1px solid $black-opacity;
       img {
         animation: jump 0.4s ease;
       }

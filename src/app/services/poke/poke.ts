@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { combineLatest, map, Observable, of, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { PokemonCard } from '../../interfaces/pokemon-card';
@@ -13,27 +13,27 @@ import { StorageService } from '../storage/storage';
 export class PokeService {
   private readonly pokeApi = inject(PokeApiService);
   private readonly storage = inject(StorageService);
+  favoriteIds = signal<number[]>([]);
 
   count = 0;
   private readonly FIVE_MINUTES = 5 * 60 * 1000;
 
   setFavorites(favoriteIds: number[]) {
-    this.storage.setItem('favorite-pokemons', favoriteIds);
+    this.storage.setItem('favoritePokemons', favoriteIds);
   }
 
   getFavorites(): number[] {
-    return this.storage.getItem('favorite-pokemons') ?? [];
+    return this.storage.getItem('favoritePokemons') ?? [];
   }
 
-  getFavoritePokemons(
-    pageSize: number,
+  filterFavoritePokemons(
+    cache: { data: PokemonCard[]; valid: boolean },
+    filter: string,
     pageIndex: number,
-    filter: string
+    pageSize: number
   ): Observable<PokemonCard[]> {
-    const all = (this.storage.getItem(environment.CACHE_KEY) ??
-      []) as PokemonCard[];
     const favorites = this.getFavorites();
-    const filtered = all.filter(
+    const filtered = cache.data.filter(
       (p) =>
         p.name.toLowerCase().includes(filter.toLowerCase()) &&
         favorites.includes(p.id)
@@ -43,22 +43,57 @@ export class PokeService {
     return of(filtered.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize));
   }
 
-  getPokemons(
-    pageSize: number,
-    pageIndex: number,
-    filter: string
-  ): Observable<PokemonCard[]> {
+  getPokemons({
+    pageSize,
+    pageIndex,
+    filter,
+    favoriteFilter,
+  }: {
+    pageSize: number;
+    pageIndex: number;
+    filter: string;
+    favoriteFilter: boolean;
+  }) {
     const cache = this.getCachedData();
+    const predicateFn = favoriteFilter
+      ? this.filterFavoritePokemons.bind(this)
+      : this.filterCacheData.bind(this);
     if (cache.valid) {
-      const filtered = cache.data.filter((p) =>
-        p.name.toLowerCase().includes(filter.toLowerCase())
-      );
-      this.count = filtered.length;
-      return of(
-        filtered.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
+      return predicateFn(cache, filter, pageIndex, pageSize);
+    } else {
+      return this.getPokemonsData(100000, 0).pipe(
+        switchMap((response) =>
+          predicateFn(
+            {
+              data: response,
+              valid: true,
+            },
+            filter,
+            pageIndex,
+            pageSize
+          )
+        )
       );
     }
+  }
 
+  private filterCacheData(
+    cache: { data: PokemonCard[]; valid: boolean },
+    filter: string,
+    pageIndex: number,
+    pageSize: number
+  ) {
+    const filtered = cache.data.filter((p) =>
+      p.name.toLowerCase().includes(filter.toLowerCase())
+    );
+    this.count = filtered.length;
+    return of(filtered.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize));
+  }
+
+  private getPokemonsData(
+    pageSize: number,
+    pageIndex: number
+  ): Observable<PokemonCard[]> {
     return this.fetchBasicData(pageSize, pageIndex).pipe(
       switchMap((basic) => this.enrichData(basic)),
       map((response) => this.storeAndFormat(response))
@@ -68,7 +103,7 @@ export class PokeService {
   private getCachedData(): { data: PokemonCard[]; valid: boolean } {
     const data = this.storage.getItem(environment.CACHE_KEY) as PokemonCard[];
     const expiration = this.storage.getItem(environment.EXPIRATION_KEY);
-    const isValid = data?.length && expiration && Date.now() < expiration;
+    const isValid = data?.length > 900 && expiration && Date.now() < expiration;
     return { data: data ?? [], valid: !!isValid };
   }
 
@@ -116,7 +151,7 @@ export class PokeService {
         })) ?? [],
     }));
 
-    const sorted = formatted.sort((a, b) => a.id - b.id);
+    const sorted = formatted.toSorted((a, b) => a.id - b.id);
     const now = Date.now();
 
     this.storage.setItem('count', response.count);
