@@ -16,11 +16,11 @@
 
 <p align="center"> 
   <img alt="Top Language" src="https://img.shields.io/github/languages/top/giselida/giselida-pokedex-pwa?color=3498db&style=for-the-badge">
-  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/giselida/giselida-pokedex-pwa?color=3498db&style=for-the-badge&label=Último%20Commit">   
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/giselida/giselida-pokedex-pwa/main?color=3498db&style=for-the-badge&label=Último%20Commit">   
   <a href="https://github.com/giselida">
-    <img alt="Developer Gisélida Cristine" src="https://img.shields.io/badge/Developer-Gisélida_Cristine-3498db?style=for-the-badge&label=Desenvolvedor">
+  <img alt="Developer Gisélida Cristine" src="https://img.shields.io/badge/Developer-Gisélida_Cristine-3498db?style=for-the-badge&label=Desenvolvedor">
   </a>  
-  <img alt="Project License" src="https://img.shields.io/github/license/giselida/giselida-pokedex-pwa?style=for-the-badge&color=3498db&label=Licença"/>   
+  <img alt="Project License" src="https://img.shields.io/github/license/giselida/giselida-pokedex-pwa?style=for-the-badge&color=3498db&label=Licença">   
   <img alt="Project Status" src="https://img.shields.io/badge/status-concluído-3498db?style=for-the-badge">
 </p>
 
